@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Health Care AI Speaker</string>
+    <string name="PleaseInputSocialWorkerName">사회복지사의 이름을 입력하세요.\n</string>
+    <string name="add_name">회원 추가</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_medicine_edit">MedicineEditActivity</string>
+
+</resources>
