@@ -26,14 +26,14 @@ public class MedicineEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_edit);
 
-        Toast.makeText(this,"옆으로 밀어서 삭제하세요.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"옆으로 밀어서 삭제하세요.", Toast.LENGTH_SHORT).show();
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("복약 주기 수정");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        mLVI = (ArrayList<medicineListViewItem>) intent.getSerializableExtra("mLVI");
+        mLVI = (ArrayList<medicineListViewItem>) intent.getSerializableExtra("mLVIArray");
         urlbase = intent.getStringExtra("urlbase");
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.medicine_edit_RecyclerView_id);
@@ -45,8 +45,8 @@ public class MedicineEditActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
-        FloatingActionButton sendMessegeButton = (FloatingActionButton)findViewById(R.id.Add_Medicine_Button_id);
-        sendMessegeButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addMedicineButton = (FloatingActionButton)findViewById(R.id.Add_Medicine_Button_id);
+        addMedicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =  new Intent(MedicineEditActivity.this,SendMessagePopUpActivity.class);
@@ -77,6 +77,7 @@ public class MedicineEditActivity extends AppCompatActivity {
             final int position = viewHolder.getAdapterPosition();
             mLVI.remove(position);
             mRVAdapter.notifyItemRemoved(position);
+            new Socket_SendInfo("DeleteMedicine","");
         }
     };
 

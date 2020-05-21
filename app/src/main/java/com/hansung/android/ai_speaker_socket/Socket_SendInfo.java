@@ -1,12 +1,15 @@
 package com.hansung.android.ai_speaker_socket;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class Socket_SetInfo {
+public class Socket_SendInfo {
     String ip;
     int port;
     String mode="";
@@ -20,9 +23,9 @@ public class Socket_SetInfo {
     byte[]bytes;
 
 
-    public Socket_SetInfo(String ip, int port, String mode, String send_msg){
-        this.ip = ip;
-        this.port = port;
+    public Socket_SendInfo(String mode, String send_msg){
+        this.ip = PublicFunctions.ip;
+        this.port = PublicFunctions.port;
         this.mode = mode;
         this.output = send_msg;
 
@@ -47,7 +50,10 @@ public class Socket_SetInfo {
 
 
             try {
-                socket = new Socket(ip, port);
+//                socket = new Socket(ip, port);
+                socket = new Socket();
+                SocketAddress socketAddress = new InetSocketAddress(ip, port);
+                socket.connect(socketAddress,3000);
                 os = socket.getOutputStream();
                 String send_msg = app+"/"+mode+"/"+output;
                 bytes = send_msg.getBytes();
@@ -60,7 +66,7 @@ public class Socket_SetInfo {
 
                 socket.close();
 
-            } catch (Exception e) {
+            } catch (IOException e) {
 
             }
 

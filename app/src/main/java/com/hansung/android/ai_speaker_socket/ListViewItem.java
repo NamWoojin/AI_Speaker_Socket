@@ -18,6 +18,7 @@ public class ListViewItem {
     private String getUpTime;
 
     private String heartBeat;
+    private String heartTime;
 
     public void setType(int type) {
         this.type = type ;
@@ -81,4 +82,11 @@ public class ListViewItem {
         return this.heartBeat;
     }
 
+    public void setHeartTime(String heartTime) {
+        this.heartTime = heartTime;
+    }
+
+    public String getHeartTime() {
+        return heartTime;
+    }
 }

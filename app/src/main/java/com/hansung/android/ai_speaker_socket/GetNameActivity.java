@@ -10,9 +10,6 @@ import android.widget.EditText;
 
 public class GetNameActivity extends AppCompatActivity {
 
-    private String ip = "192.168.0.28"; // IP
-    private int port = 8888; // PORT번호
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +22,6 @@ public class GetNameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(GetNameActivity.this,CareMembersListActivity.class);
                 intent.putExtra("Worker_Name",editText.getText().toString());
-                intent.putExtra("ip",ip);
-                intent.putExtra("port",port);
                 startActivity(intent);
 
             }

@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
@@ -54,25 +56,27 @@ public class ListViewAdapter extends BaseAdapter {
             switch (viewType) {
                 case ITEM_VIEW_TYPE_MEDICINE:
                     convertView = inflater.inflate(R.layout.healthinfo_medicine, parent, false);
-//                    ListView medicineListView = (ListView)convertView.findViewById(R.id.medicine_ListView_id);
-//                    medicineListViewAdapter mLVA = new medicineListViewAdapter();
-//                    for(int i= 0;i<listViewItem.getmLVI().size();i++)
-//                        mLVA.addItem(listViewItem.getmLVI().get(i));
-//                    medicineListView.setAdapter(mLVA);
                     TextView medicineName;
                     TextView medicineCycle;
                     TextView medicineType;
                     LinearLayout medicineLL = (LinearLayout)convertView.findViewById(R.id.medicine_healthInfo_LinearLayout_id);
-                    for(int i = 0;i<listViewItem.getmLVI().size();i++){
-                        medicineListLinearLayout mLLL = new medicineListLinearLayout(this.context);
-                        medicineName = (TextView)mLLL.findViewById(R.id.medicine_name_id);
-                        medicineCycle = (TextView)mLLL.findViewById(R.id.medicine_cycle_id);
-                        medicineType = (TextView)mLLL.findViewById(R.id.medicine_type_id);
-                        medicineName.setText(listViewItem.getmLVI().get(i).getMedicineName());
-                        medicineCycle.setText(listViewItem.getmLVI().get(i).getMedicineCycle());
-                        medicineType.setText(listViewItem.getmLVI().get(i).getMedicineType());
-                        medicineLL.addView(mLLL);
+                    LinearLayout nonInfoLinearLayout = (LinearLayout)convertView.findViewById(R.id.medicine_nonInfo_LinearLayout_id);
+
+                    if(listViewItem.getmLVI().size()>0) {
+                        nonInfoLinearLayout.setVisibility(View.GONE);
+                        for (int i = 0; i < listViewItem.getmLVI().size(); i++) {
+                            medicineListLinearLayout mLLL = new medicineListLinearLayout(this.context);
+                            medicineName = (TextView) mLLL.findViewById(R.id.medicine_name_id);
+                            medicineCycle = (TextView) mLLL.findViewById(R.id.medicine_cycle_id);
+                            medicineType = (TextView) mLLL.findViewById(R.id.medicine_type_id);
+                            medicineName.setText(listViewItem.getmLVI().get(i).getMedicineName());
+                            medicineCycle.setText(listViewItem.getmLVI().get(i).getMedicineCycle());
+                            medicineType.setText(listViewItem.getmLVI().get(i).getMedicineType());
+                            medicineLL.addView(mLLL);
+                        }
                     }
+                    else
+                        nonInfoLinearLayout.setVisibility(View.VISIBLE);
 
 
                     break;
@@ -115,10 +119,20 @@ public class ListViewAdapter extends BaseAdapter {
 
                 case ITEM_VIEW_TYPE_BEAT:
                     convertView = inflater.inflate(R.layout.healthinfo_heartbeat,parent, false);
-
-                    TextView heartBeatTextView = (TextView)convertView.findViewById(R.id.HeartBeat_id);
-
-                    heartBeatTextView.setText(listViewItem.getHeartBeat());
+                    LinearLayout nonInfoHeartLinearLayout = (LinearLayout)convertView.findViewById(R.id.heartbeat_nonInfo_LinearLayout_id);
+                    LinearLayout InfoHeartLinearLayout = (LinearLayout)convertView.findViewById(R.id.heartbeat_LinearLayout_id);
+                    if(!listViewItem.getHeartBeat().equals("정보가 없습니다.")) {
+                        nonInfoHeartLinearLayout.setVisibility(View.GONE);
+                        InfoHeartLinearLayout.setVisibility(View.VISIBLE);
+                        TextView heartbeatTextView = (TextView) convertView.findViewById(R.id.HeartBeat_TextView_id);
+                        TextView heartbeatTimeTextView = (TextView) convertView.findViewById(R.id.heart_Time_HealthInfo_TextView_id);
+                        heartbeatTextView.setText(listViewItem.getHeartBeat());
+                        heartbeatTimeTextView.setText(listViewItem.getHeartTime() + "에 측정되었습니다.");
+                    }
+                    else{
+                        InfoHeartLinearLayout.setVisibility(View.GONE);
+                        nonInfoHeartLinearLayout.setVisibility(View.VISIBLE);
+                    }
                     break;
             }
         }
@@ -140,16 +154,21 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem item = new ListViewItem();
         item.setType(ITEM_VIEW_TYPE_MEDICINE) ;
         item.setmLVI(mLVI);
-        listViewItemList.add(0,item);
+        if(listViewItemList.size()>3)
+            listViewItemList.set(0,item);
+        else
+            listViewItemList.add(0,item);
     }
     public void addItem(Drawable morningImage, Drawable afternoonImage,Drawable nightImage) {
         ListViewItem item = new ListViewItem() ;
-
         item.setType(ITEM_VIEW_TYPE_MEAL) ;
         item.setMorningImage(morningImage);
         item.setAfternoonImage(afternoonImage);
         item.setNightImage(nightImage);
-        listViewItemList.add(1,item) ;
+        if(listViewItemList.size()>3)
+            listViewItemList.set(1,item);
+        else
+            listViewItemList.add(1,item);
     }
 
     public void addItem(String sleepTime,String goBedTime,String getUpTime) {
@@ -158,14 +177,21 @@ public class ListViewAdapter extends BaseAdapter {
         item.setSleepTime(sleepTime);
         item.setGoBedTime(goBedTime);
         item.setGetUpTime(getUpTime);
-        listViewItemList.add(2,item);
+        if(listViewItemList.size()>3)
+            listViewItemList.set(2,item);
+        else
+            listViewItemList.add(2,item);
     }
 
-    public void addItem(String heartBeat) {
+    public void addItem(String heartBeat,String time) {
         ListViewItem item = new ListViewItem() ;
         item.setType(ITEM_VIEW_TYPE_BEAT) ;
         item.setHeartBeat(heartBeat);
-        listViewItemList.add(3,item);
+        item.setHeartTime(time);
+        if(listViewItemList.size()>3)
+            listViewItemList.set(3,item);
+        else
+            listViewItemList.add(3,item);
     }
 
     public void removeItem(int index){

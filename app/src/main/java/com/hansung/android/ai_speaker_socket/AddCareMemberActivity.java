@@ -76,16 +76,13 @@ public class AddCareMemberActivity extends AppCompatActivity {
     }
 
     void SendInformation(String name,String gender, String age,String deviceid){
-        String send_msg = "{"+MakeMsg("device_id",deviceid)+","+
-                MakeMsg("worker_name",Worker_Name)+","+
-                MakeMsg("member_name",name)+","+
-                MakeMsg("member_age",age)+","+
-                MakeMsg("member_gender",gender)+"}";
+        String send_msg = "{"+PublicFunctions.MakeMsg("device_id",deviceid)+","+
+                PublicFunctions.MakeMsg("worker_name",Worker_Name)+","+
+                PublicFunctions.MakeMsg("member_name",name)+","+
+                PublicFunctions.MakeMsg("member_age",age)+","+
+                PublicFunctions.MakeMsg("member_gender",gender)+"}";
 
-        new Socket_SetInfo(ip,port,"AddMember",send_msg);
+        new Socket_SendInfo("AddMember",send_msg);
 
-    }
-    String MakeMsg(String key, String value){
-        return "\'"+key+"\':\'"+value+"\'";
     }
 }
