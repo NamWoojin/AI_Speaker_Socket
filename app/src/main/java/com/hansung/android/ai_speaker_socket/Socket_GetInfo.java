@@ -77,12 +77,17 @@ public class Socket_GetInfo {
         while(true) {
             if (getAnswer) {
                 if (loadNum == 0) {
-                    ((DetailScrollingActivity) context).AddData(itemData);
+
                     switch (mode) {
+                        case  "GetMedicine":
+                            ((MedicineEditActivity) context).SetMedicineUI(input);
+                            break;
                         case "GetMeal":
+                            ((DetailScrollingActivity) context).AddData(itemData);
                             ((DetailScrollingActivity) context).SetAverageMealTime();
                             break;
                         case "GetSleep":
+                            ((DetailScrollingActivity) context).AddData(itemData);
                             ((DetailScrollingActivity) context).SetAverageSleepTime();
                             break;
                     }
@@ -90,7 +95,7 @@ public class Socket_GetInfo {
                 else {
                     ((DetailScrollingActivity) context).AddMoreData(itemData);
                 }
-
+            break;
             }
         }
     }
@@ -112,6 +117,7 @@ public class Socket_GetInfo {
                 socket.connect(socketAddress,3000);
                 os = socket.getOutputStream();
                 String output = app+mode+send_msg;
+                Log.i("GetInfo_output",output);
                 bytes = output.getBytes();
                 ByteBuffer buffer = ByteBuffer.allocate(4);
                 buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -132,7 +138,6 @@ public class Socket_GetInfo {
                 if(socketConnected) {
                     while (true) {
                         long end = System.currentTimeMillis();
-                        Log.i("TIMETAG",start + "------------"+end);
                         if ((end - start) / 1000 < 5) {
                             is = socket.getInputStream();
                             bytes = new byte[4];
@@ -145,7 +150,7 @@ public class Socket_GetInfo {
                             input = new String(bytes, "UTF-8");
 
                             if (size > 0) {
-                                Log.i("GetInfo", input);
+                                Log.i("GetInfo_input", input);
                                 break;
                             }
                         } else {

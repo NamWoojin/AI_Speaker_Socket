@@ -7,6 +7,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -100,7 +101,7 @@ public class HealthInfoActivity extends AppCompatActivity {
                 Intent intent;
                 if(position == 0){
                     intent = new Intent(HealthInfoActivity.this,MedicineEditActivity.class);
-                    intent.putExtra("mLVIArray", mLVIArray);
+                    intent.putExtra("DeviceId",DeviceId);
                 }
                 else{
                     intent = new Intent(HealthInfoActivity.this,DetailScrollingActivity.class);
@@ -163,6 +164,7 @@ public class HealthInfoActivity extends AppCompatActivity {
                 mLVIArray.add(mLVI);
                 adapter.addItem(mLVIArray);
             }
+
         }
         else{
             listView.setAdapter(adapter);
@@ -317,7 +319,6 @@ public class HealthInfoActivity extends AppCompatActivity {
             adapter.removeItem(2);
             adapter.addItem("정보가 없습니다.","","");
             listView.setAdapter(adapter);
-            Toast.makeText(this,"수면 기록이 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -16,9 +16,8 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity
             android:name=".MedicineEditActivity"
-            android:label="@string/title_activity_medicine_edit"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DetailScrollingActivity" />
+            android:label="@string/title_activity_medicine_edit"/>
+        <activity android:name=".DetailScrollingActivity"/>
         <activity
             android:name=".SendMessagePopUpActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />

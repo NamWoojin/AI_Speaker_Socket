@@ -1,5 +1,7 @@
 package com.hansung.android.ai_speaker_socket;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,8 +16,8 @@ public class Socket_SendInfo {
     int port;
     String mode="";
     String output = "";
-    Boolean getAnswer = false;
-
+    public static Boolean sendMsg = false;
+    public static Boolean sendSuccess = false;
     String app = "app";
 
     private Socket socket;
@@ -30,25 +32,12 @@ public class Socket_SendInfo {
         this.output = send_msg;
 
         checkStart.start();
-//        while(true) {
-//            if (getAnswer) {
-//                if (!input.equals(""))
-//                    ((CareMembersListActivity) context).SetUI(getArrayListFromJSONString(input));
-//                else
-//                    ((CareMembersListActivity) context).NonInfo();
-//
-//                break;
-//
-//            }
-//        }
     }
 
 
     private Thread checkStart = new Thread() {
 
         public void run() {
-
-
             try {
 //                socket = new Socket(ip, port);
                 socket = new Socket();
@@ -56,6 +45,7 @@ public class Socket_SendInfo {
                 socket.connect(socketAddress,3000);
                 os = socket.getOutputStream();
                 String send_msg = app+"/"+mode+"/"+output;
+                Log.i("SendInfo_output",send_msg);
                 bytes = send_msg.getBytes();
                 ByteBuffer buffer = ByteBuffer.allocate(4);
                 buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -63,14 +53,14 @@ public class Socket_SendInfo {
                 os.write(buffer.array(),0,4);
                 os.write(bytes);
                 os.flush();
-
+                sendSuccess = true;
                 socket.close();
 
             } catch (IOException e) {
-
+                sendSuccess = false;
             }
 
-
+        sendMsg = true;
         }
     };
 }

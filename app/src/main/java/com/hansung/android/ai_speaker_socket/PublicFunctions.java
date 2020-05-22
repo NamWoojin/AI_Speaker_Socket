@@ -10,9 +10,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class PublicFunctions {
-//    public static String ip = "192.168.0.28"; // IP
-    public static String ip = "211.178.81.29"; // IP
-    public static int port = 50000; // PORT
+    public static String ip = "192.168.0.2"; // IP
+    public static int port = 8888; // PORT
+//    public static String ip = "211.178.81.29"; // IP
+//    public static int port = 50000; // PORT
 
     public static ArrayList<Tag> getArrayListFromJSONString(String jsonString) {
         ArrayList<Tag> output = new ArrayList();

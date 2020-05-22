@@ -187,10 +187,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
                                 DinnerTime[j] = arrayList.get(i).Time.substring(11,16);
                             itemData.get(j).setDinner(true);
                         }
-
                         break;
-
-
                     }
                 }
             }
@@ -209,7 +206,6 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         TextView BreakfastTextView = (TextView)findViewById(R.id.averageBreakfastTimeTextView_id);
         TextView LunchTextView = (TextView)findViewById(R.id.averageLunchTimeTextView_id);
         TextView DinnerTextView = (TextView)findViewById(R.id.averageDinnerTimeTextView_id);
-
         BreakfastTextView.setText(MealBreakfastTime);
         LunchTextView.setText(MealLunchTime);
         DinnerTextView.setText(MealDinnerTime);
@@ -242,7 +238,6 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
             time = (time * 60) + Integer.parseInt(stArray[1]);
         }
         catch (NumberFormatException e){}
-        Log.i(this.getClass().getName(),"++"+time);
         return time;
     }
 
@@ -361,7 +356,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         if(countNum != 0)
             averageNum = wholeTime/countNum;
 
-        return averageNum/60 + "시 "+averageNum % 60 +"분";
+        return averageNum/60 + "시간 "+averageNum % 60 +"분";
     }
 
     String CalculateAverageTime(ArrayList<DetailItemData> itemData,int mode){

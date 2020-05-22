@@ -73,8 +73,13 @@ public class CareMembersListActivity extends AppCompatActivity {
         NonInfoTextView.setVisibility(View.VISIBLE);
         NonInfoTextView.setText("정보 가져오는 중...");
 
-        new Socket_GetInfo(this,"GetMember","/{'worker_name':'"+Worker_Name+"'}");
-
+        Socket_GetInfo socket_getInfo = new Socket_GetInfo(this,"GetMember","/{'worker_name':'"+Worker_Name+"'}");
+        while (true){
+            if(socket_getInfo.getAnswer){
+                SetUI(socket_getInfo.input);
+                break;
+            }
+        }
     }
 
     void SetUI(String input) {

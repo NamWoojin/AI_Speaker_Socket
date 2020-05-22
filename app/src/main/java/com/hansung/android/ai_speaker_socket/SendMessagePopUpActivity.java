@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SendMessagePopUpActivity extends Activity {
     Button sendButton, cancelButton;
@@ -36,7 +37,8 @@ public class SendMessagePopUpActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if(messageEditTextView.getText().toString().length()>0)
-                    SendInformation(DeviceId,MemberName,messageEditTextView.getText().toString());
+                    SendInformation(DeviceId, MemberName, messageEditTextView.getText().toString());
+
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +63,18 @@ public class SendMessagePopUpActivity extends Activity {
                 PublicFunctions.MakeMsg("member_name",name)+","+
                 PublicFunctions.MakeMsg("message",message)+"}";
 
-        new Socket_SendInfo("SendMessage",send_msg);
-
+        Socket_SendInfo socket_sendInfo=new Socket_SendInfo("SendMessage",send_msg);
+        while(true){
+            if(socket_sendInfo.sendMsg){
+                if(socket_sendInfo.sendSuccess){
+                    Toast.makeText(this,"전송 성공.",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else{
+                    Toast.makeText(this,"전송 실패. 다시 시도하세요.",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
     }
 }

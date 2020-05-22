@@ -1,21 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="320dp"
+    android:layout_width="360dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@color/White">
+    android:background="@color/White"
+    android:padding="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
-        <EditText
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/MessageEditView_id"
-            android:backgroundTint="@color/divider"
-            android:layout_margin="10dp"
-            android:hint="전송할 메세지를 입력하세요."/>
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="약 이름"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/MedicineName_MedicineAddTextView_id"
+                android:backgroundTint="@color/divider"
+                android:layout_margin="10dp"
+                android:hint="약의 이름을 입력하세요."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="주기"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/Breakfast_MedicineAddSwitch_id"
+                    android:text="아침 "
+                    android:checked="false"
+                    android:layout_marginVertical="5dp"/>
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/Lunch_MedicineAddSwitch_id"
+                    android:checked="false"
+                    android:text="점심 "
+                    android:layout_marginVertical="5dp"/>
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:id="@+id/Dinner_MedicineAddSwitch_id"
+                    android:checked="false"
+                    android:text="저녁 "
+                    android:layout_marginVertical="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="타입"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:gravity="center">
+
+                <ToggleButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textOn="식후"
+                    android:textOff="식전"
+                    android:checked="true"
+                    android:id="@+id/Type_MedicineAddToggleButton_id"
+                    android:onClick="onToggleClicked"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -26,7 +117,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/sendButton_id"
+            android:id="@+id/sendButton_MedicineAddButton_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
@@ -34,7 +125,7 @@
             android:text="전송" />
 
         <Button
-            android:id="@+id/cancelButton_id"
+            android:id="@+id/cancelButton_MedicineAddButton_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"

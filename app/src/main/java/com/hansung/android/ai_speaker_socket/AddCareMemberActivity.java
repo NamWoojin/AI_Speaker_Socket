@@ -14,8 +14,6 @@ public class AddCareMemberActivity extends AppCompatActivity {
     final static String TAG = "AndroidAPITest";
     String Gender = "남";
     String Worker_Name;
-    String ip = "";
-    int port = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +21,6 @@ public class AddCareMemberActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Worker_Name = intent.getStringExtra("Worker_Name");
-        ip = intent.getStringExtra("ip");
-        port = intent.getIntExtra("port",-1);
 
         Button addButton = (Button)findViewById(R.id.addCareMemberButton_id);
         final Button maleButton = (Button)findViewById(R.id.MaleButton_id);
@@ -82,7 +78,18 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 PublicFunctions.MakeMsg("member_age",age)+","+
                 PublicFunctions.MakeMsg("member_gender",gender)+"}";
 
-        new Socket_SendInfo("AddMember",send_msg);
-
+        Socket_SendInfo socket_sendInfo = new Socket_SendInfo("AddMember",send_msg);
+        while(true){
+            if(socket_sendInfo.sendMsg){
+                if(socket_sendInfo.sendSuccess){
+                    Toast.makeText(this,"전송 성공.",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else{
+                    Toast.makeText(this,"전송 실패. 다시 시도하세요.",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
     }
 }
