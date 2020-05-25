@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,11 +22,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class CareMembersListActivity extends AppCompatActivity {
+public class CareMembersListActivity extends AppCompatActivity implements View.OnClickListener{
     String Worker_Name;
     TextView NonInfoTextView;
     ListView CareMembersListView;
     CareMembersListViewAdapter CMListViewAdapter = new CareMembersListViewAdapter();
+
+    private FloatingActionButton fab_main, fab_add, fab_delete;
+    private Animation fab_open, fab_close;
+    private boolean isFabOpen = false;
 
 
     @Override
@@ -42,6 +48,18 @@ public class CareMembersListActivity extends AppCompatActivity {
         TextView WorkerNameTextView= (TextView)findViewById(R.id.socialWorkerNameTextView_id);
         WorkerNameTextView.setText("사회복지사 "+Worker_Name+"님");
 
+        fab_open = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+
+
+        fab_main = (FloatingActionButton) findViewById(R.id.ShowOther_FloatingActionButton);
+        fab_add = (FloatingActionButton) findViewById(R.id.Add_CareMember_FloatingActionButton);
+        fab_delete = (FloatingActionButton) findViewById(R.id.Delete_CareMember_FloatingActionButton);
+
+        fab_main.setOnClickListener(this);
+        fab_add.setOnClickListener(this);
+        fab_delete.setOnClickListener(this);
+
         ListView CareMembersListView = (ListView) findViewById(R.id.CareMembersListView_id);
         CareMembersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,17 +72,11 @@ public class CareMembersListActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton addMemberButton = (FloatingActionButton)findViewById(R.id.AddMemberButton_id);
-        addMemberButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CareMembersListActivity.this,AddCareMemberActivity.class);
-                intent.putExtra("Worker_Name",Worker_Name);
-                startActivity(intent);
-            }
-        });
-
     }
+
+
+
+
 
     @Override
     protected void onStart() {
@@ -79,6 +91,51 @@ public class CareMembersListActivity extends AppCompatActivity {
                 SetUI(socket_getInfo.input);
                 break;
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.ShowOther_FloatingActionButton:
+                toggleFab();
+                break;
+
+            case R.id.Add_CareMember_FloatingActionButton:
+                intent = new Intent(CareMembersListActivity.this,AddCareMemberActivity.class);
+                intent.putExtra("Worker_Name",Worker_Name);
+                startActivity(intent);
+                break;
+
+            case R.id.Delete_CareMember_FloatingActionButton:
+                intent = new Intent(CareMembersListActivity.this,DeleteCareMemberActivity.class);
+                intent.putExtra("Worker_Name",Worker_Name);
+                startActivity(intent);
+                break;
+
+        }
+
+    }
+
+    private void toggleFab() {
+
+        if (isFabOpen) {
+
+            fab_main.setImageResource(R.drawable.ic_menu_white_24dp);
+            fab_add.startAnimation(fab_close);
+            fab_delete.startAnimation(fab_close);
+            fab_add.setClickable(false);
+            fab_delete.setClickable(false);
+            isFabOpen = false;
+
+        } else {
+            fab_main.setImageResource(R.drawable.ic_close_white_24dp);
+            fab_add.startAnimation(fab_open);
+            fab_delete.startAnimation(fab_open);
+            fab_add.setClickable(true);
+            fab_delete.setClickable(true);
+            isFabOpen = true;
         }
     }
 

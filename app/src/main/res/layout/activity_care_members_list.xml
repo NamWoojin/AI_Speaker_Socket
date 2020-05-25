@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -94,16 +94,61 @@
 
 
     </LinearLayout>
+
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/AddMemberButton_id"
-        android:layout_gravity="bottom|end"
+        android:id="@+id/Delete_CareMember_FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_add_white_24dp"/>
+        android:layout_above="@+id/Add_CareMember_FloatingActionButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/ic_delete_sweep_black_24dp"
+        android:visibility="invisible"
+        app:borderWidth="0dp"
+        app:fabSize="normal" />
 
-</FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Add_CareMember_FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ShowOther_FloatingActionButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/ic_person_add_black_24dp"
+        android:visibility="invisible"
+        app:borderWidth="0dp"
+        app:fabSize="normal"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ShowOther_FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_menu_white_24dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal"/>
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--android:id="@+id/ShowOtherButton_id"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--android:src="@drawable/ic_add_white_24dp"/>-->
+
+
+</RelativeLayout>

@@ -3,7 +3,6 @@ package com.hansung.android.ai_speaker_socket;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;

@@ -11,13 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DeleteCareMemberActivity"></activity>
         <activity
             android:name=".MedicineAddPopUpActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity
             android:name=".MedicineEditActivity"
-            android:label="@string/title_activity_medicine_edit"/>
-        <activity android:name=".DetailScrollingActivity"/>
+            android:label="@string/title_activity_medicine_edit" />
+        <activity android:name=".DetailScrollingActivity" />
         <activity
             android:name=".SendMessagePopUpActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />

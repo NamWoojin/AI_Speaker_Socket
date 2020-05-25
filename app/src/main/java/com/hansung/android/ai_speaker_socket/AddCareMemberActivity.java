@@ -3,17 +3,26 @@ package com.hansung.android.ai_speaker_socket;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+
 
 public class AddCareMemberActivity extends AppCompatActivity {
     final static String TAG = "AndroidAPITest";
     String Gender = "남";
     String Worker_Name;
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
         Button addButton = (Button)findViewById(R.id.addCareMemberButton_id);
         final Button maleButton = (Button)findViewById(R.id.MaleButton_id);
         final Button femaleButton = (Button)findViewById(R.id.FemaleButton_id);
+        final ImageButton photoButton = (ImageButton)findViewById(R.id.add_photo_button);
 
 
 
@@ -67,6 +77,14 @@ public class AddCareMemberActivity extends AppCompatActivity {
             }
         });
 
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,1);
+            }
+        });
+
 
         maleButton.callOnClick();
     }
@@ -76,7 +94,8 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 PublicFunctions.MakeMsg("worker_name",Worker_Name)+","+
                 PublicFunctions.MakeMsg("member_name",name)+","+
                 PublicFunctions.MakeMsg("member_age",age)+","+
-                PublicFunctions.MakeMsg("member_gender",gender)+"}";
+                PublicFunctions.MakeMsg("member_gender",gender)+","+
+                PublicFunctions.MakeMsg("photo",BitmapToString(bitmap))+"}";
 
         Socket_SendInfo socket_sendInfo = new Socket_SendInfo("AddMember",send_msg);
         while(true){
@@ -91,5 +110,74 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            Bundle bundle = data.getExtras();
+            bitmap = (Bitmap)bundle.get("data");
+            int mDegree = 0;
+            mDegree += 90;
+            bitmap = rotateImage(bitmap,mDegree);
+            ImageButton button1 = (ImageButton)findViewById(R.id.add_photo_button);
+            button1.setImageBitmap(bitmap);
+        }
+    }
+
+    public static String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
+        byte[] bytes = baos.toByteArray();
+        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return temp;
+    }
+
+
+//    public  void SaveBitmapToFile(Bitmap bitmap, String strFilePath ,String filename) {
+//        File file = new File(strFilePath);
+//        OutputStream out = null;
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        File fileCacheItem = new File(strFilePath + filename);
+//        try {
+//            fileCacheItem.createNewFile();
+//            out = new FileOutputStream(fileCacheItem);
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                out.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+
+//    private void insertRecord() {
+//        String name = mName.getText().toString()+".png";
+//        SaveBitmapToFile(bitmap,FileAddress,name);
+//
+//        String ImageAddress = FileAddress + name;
+//        ImageAddress = ImageAddress.replaceAll(" ","");
+//
+//        nOfRows = mDbHelper.insertRestaurnatByMethod(mName.getText().toString(), mAddress.getText().toString(),
+//                mPhonenumber.getText().toString(), mTime.getText().toString(),ImageAddress);
+//
+//        if (nOfRows >0) {
+//            Toast.makeText(this, nOfRows + " Record Inserted", Toast.LENGTH_SHORT).show();
+//            onBackPressed();
+//        }
+//        else
+//            Toast.makeText(this,"No Record Inserted", Toast.LENGTH_SHORT).show();
+//    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 }
