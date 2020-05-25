@@ -10,6 +10,8 @@ public class DetailItemData {
     private Boolean Lunch = false;
     private Boolean Dinner = false;
 
+    private String PulseDate = "";
+    private String Pulse = "";
 
     public void setWakeUpTime(String wakeUpTime) {
         this.wakeUpTime = wakeUpTime;
@@ -68,4 +70,19 @@ public class DetailItemData {
         return Dinner;
     }
 
+    public void setPulse(String pulse) {
+        Pulse = pulse;
+    }
+
+    public void setPulseDate(String pulseDate) {
+        PulseDate = pulseDate;
+    }
+
+    public String getPulse() {
+        return Pulse;
+    }
+
+    public String getPulseDate() {
+        return PulseDate;
+    }
 }

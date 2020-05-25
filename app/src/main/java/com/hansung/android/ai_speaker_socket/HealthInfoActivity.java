@@ -56,8 +56,8 @@ public class HealthInfoActivity extends AppCompatActivity {
     ArrayList<medicineListViewItem> mLVIArray = new ArrayList<>();
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         GetMedicine();
         GetMeal();
         GetSleepTime();

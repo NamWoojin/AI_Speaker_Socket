@@ -15,16 +15,18 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 public class Socket_GetInfo {
-    Context context;
     String ip = PublicFunctions.ip;
     int port = PublicFunctions.port;
-    String send_msg;
+    Context context;
+    String send_msg ="";
     String mode="";
+    String remark = "";
+    String input="";
+    String app = "app/";
     Boolean getAnswer = false;
     Boolean detail = false;
     int loadNum = 0;
-    String app = "app/";
-    String input="";
+
     ArrayList<DetailItemData> itemData = new ArrayList<>();
 
 
@@ -47,25 +49,38 @@ public class Socket_GetInfo {
         DoNextDetail();
     }
 
+    public Socket_GetInfo(Context context, String mode, String send_msg,String remark){
+        this.send_msg = send_msg;
+        this.mode = mode;
+        this.remark = remark;
+        this.context = context;
+        checkStart.start();
+        DoNext();
+    }
+
     void DoNext(){
         while(true) {
             if (getAnswer) {
-                switch (mode){
-                    case "GetMember":
-                        ((CareMembersListActivity) context).SetUI(input);
-                        break;
-                    case "GetMedicine":
-                        ((HealthInfoActivity) context).SetMedicineUI(input);
-                        break;
-                    case "GetSleep":
-                        ((HealthInfoActivity) context).SetSleepUI();
-                        break;
-                    case "GetMeal":
-                        ((HealthInfoActivity) context).SetMealUI();
-                        break;
-                    case "GetPulse":
-                        ((HealthInfoActivity) context).SetHeartUI(input);
-
+                if(!remark.equals("")){
+                    ((DeleteCareMemberActivity)context).SetUI(input);
+                }
+                else{
+                    switch (mode) {
+                        case "GetMember":
+                            ((CareMembersListActivity) context).SetUI(input);
+                            break;
+                        case "GetMedicine":
+                            ((HealthInfoActivity) context).SetMedicineUI(input);
+                            break;
+                        case "GetSleep":
+                            ((HealthInfoActivity) context).SetSleepUI();
+                            break;
+                        case "GetMeal":
+                            ((HealthInfoActivity) context).SetMealUI();
+                            break;
+                        case "GetPulse":
+                            ((HealthInfoActivity) context).SetHeartUI(input);
+                    }
                 }
                 break;
             }
@@ -90,6 +105,9 @@ public class Socket_GetInfo {
                             ((DetailScrollingActivity) context).AddData(itemData);
                             ((DetailScrollingActivity) context).SetAverageSleepTime();
                             break;
+                        case "GetPulse":
+                            ((DetailScrollingActivity) context).AddData(itemData);
+                            ((DetailScrollingActivity) context).SetAveragePulse(input);
                     }
                 }
                 else {

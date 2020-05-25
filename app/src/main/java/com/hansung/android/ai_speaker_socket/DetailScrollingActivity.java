@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,10 +59,11 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
 
         LinearLayout mealBar = (LinearLayout)findViewById(R.id.averageMealBarLinearLayout_id);
         LinearLayout sleepBar = (LinearLayout)findViewById(R.id.averageSleepBarLinearLayout_id);
+        LinearLayout pulseBar = (LinearLayout)findViewById(R.id.averageHeartBeatBarLinearLayout_id);
         LinearLayout mealMenuBar = (LinearLayout)findViewById(R.id.detail_meal_menu_linear_layout);
         LinearLayout sleepMenuBar = (LinearLayout)findViewById(R.id.detail_sleep_menu_linear_layout);
-
-        LinearLayout[] linearLayouts = {mealBar,sleepBar,mealMenuBar,sleepMenuBar};
+        LinearLayout pulseMenuBar = (LinearLayout)findViewById(R.id.detail_heartbeat_menu_linear_layout);
+        LinearLayout[] linearLayouts = {mealBar,sleepBar,pulseBar,mealMenuBar,sleepMenuBar,pulseMenuBar};
 
         for(int i = 0;i < linearLayouts.length/2;i++){
             if(i == position) {
@@ -86,14 +88,17 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         loadNum = 0;
         if(position == 0)
             GetMeal();
 
         else if(position == 1)
             GetSleepTime();
+
+        else if(position == 2)
+            GetPulse();
 
 
     }
@@ -125,6 +130,11 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
                 else if(position == 1){
                     loadNum ++;
                     GetSleepTime();
+                }
+
+                else if(position == 1){
+                    loadNum ++;
+                    GetPulse();
                 }
 
 
@@ -399,6 +409,52 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         sleepTextView.setText(SleepAverageTime);
         wakeUpTextView.setText(SleepWakeUpTime);
         goBedTextView.setText(SleepGoBedTime);
+    }
+
+
+    //----------------------------Pulse-----------------------------------------------
+    void GetPulse(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, loadNum*(-14));
+        String curDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+
+        Calendar twoWeekBefore = Calendar.getInstance();
+        twoWeekBefore.add(Calendar.DATE, (loadNum+1)*(-14));
+        String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
+
+        String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
+        new Socket_GetInfo(this,"GetPulse",params,loadNum);
+    }
+
+    public void SetAveragePulse(String input){
+        ArrayList<PublicFunctions.PulseTag> arrayList = PublicFunctions.getPulseFromJSONString(input);
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int averagePulseInt = 0;
+        int count = 0;
+        String averagePulse = "";
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -7);
+        for(int i = 0;i<arrayList.size();i++){
+            Date date = new Date();
+            try {
+                date = transFormat.parse(arrayList.get(i).Time);
+            }
+            catch (ParseException e){break;}
+            if(cal.getTime().compareTo(date)<0){
+                ++count;
+                averagePulseInt += Integer.parseInt(arrayList.get(i).Pulse);
+            }
+            else{
+                break;
+            }
+        }
+        if(count != 0)
+            averagePulseInt /= count;
+
+        averagePulse = Integer.toString(averagePulseInt);
+
+        TextView pulseTextView = (TextView)findViewById(R.id.averagePulseTextView_id);
+        pulseTextView.setText(averagePulse);
     }
 
 

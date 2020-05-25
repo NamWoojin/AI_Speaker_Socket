@@ -28,6 +28,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
     String Gender = "남";
     String Worker_Name;
     Bitmap bitmap;
+    String photoString = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +101,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 PublicFunctions.MakeMsg("member_name",name)+","+
                 PublicFunctions.MakeMsg("member_age",age)+","+
                 PublicFunctions.MakeMsg("member_gender",gender)+","+
-                PublicFunctions.MakeMsg("photo",PublicFunctions.BitmapToByteArray(bitmap).toString())+"}";
+                PublicFunctions.MakeMsg("photo",photoString)+"}";
 
 
         Socket_SendInfo socket_sendInfo = new Socket_SendInfo("AddMember",send_msg);
@@ -118,12 +119,14 @@ public class AddCareMemberActivity extends AppCompatActivity {
         }
     }
 
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap)bundle.get("data");
-            Log.i("TAG","++++++"+PublicFunctions.BitmapToByteArray(bitmap));
+            photoString = new String(PublicFunctions.BitmapToByteArray(bitmap));
+            Log.i("TAG",photoString+"++++++++++");
             ImageButton button1 = (ImageButton)findViewById(R.id.add_photo_button);
             button1.setImageBitmap(bitmap);
         }

@@ -79,8 +79,8 @@ public class CareMembersListActivity extends AppCompatActivity implements View.O
 
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         CareMembersListView.setVisibility(View.GONE);
         NonInfoTextView.setVisibility(View.VISIBLE);
         NonInfoTextView.setText("정보 가져오는 중...");

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class CareMembersListViewAdapter extends BaseAdapter {
     private ArrayList<CareMembersData> careMembersDataList = new ArrayList<CareMembersData>() ;
-    String photobyte="";
+
     @Override
     public int getCount() {
         return careMembersDataList.size() ;
@@ -67,13 +67,9 @@ public class CareMembersListViewAdapter extends BaseAdapter {
             genderTextView.setText("남");
         else
             genderTextView.setText("여");
-
         ageTextView.setText(String.valueOf(listViewItem.getAge()));
         deviceIdTextView.setText(listViewItem.getDeviceId());
-        photobyte = listViewItem.getPhoto().getBytes().toString();
-        Log.i("TAG",listViewItem.getPhoto().getBytes()+"++++++");
         Bitmap bitmap = PublicFunctions.byteArrayToBitmap(listViewItem.getPhoto().getBytes());
-        Log.i("TAG",bitmap+"++++++");
         photoImageView.setImageBitmap(PublicFunctions.byteArrayToBitmap(listViewItem.getPhoto().getBytes()));
 
         return convertView;

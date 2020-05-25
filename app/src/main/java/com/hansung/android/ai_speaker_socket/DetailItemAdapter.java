@@ -81,8 +81,10 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if(viewMode == 0)
                 return new MealViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_meal_recyclerview, parent, false));
 
-            else
+            else if(viewMode == 1)
                 return new SleepViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_sleep_recyclerview, parent, false));
+            else
+                return new PulseViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_heartbeat_recyclerview,parent,false));
 
         }
         else {
@@ -105,8 +107,8 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        DetailItemData did = (DetailItemData) itemList.get(position);
         if(holder instanceof MealViewHolder){
-            DetailItemData did = (DetailItemData)itemList.get(position);
             ((MealViewHolder)holder).MealDate.setText(did.getMealDate());
             if(did.getBreakfast())
                 ((MealViewHolder)holder).BreakFast.setImageDrawable(o);
@@ -122,10 +124,14 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((MealViewHolder)holder).Dinner.setImageDrawable(x);
         }
         else if (holder instanceof SleepViewHolder) {
-            DetailItemData did = (DetailItemData) itemList.get(position);
             ((SleepViewHolder) holder).SleepDate.setText(did.getDate());
             ((SleepViewHolder) holder).WakeUp.setText(did.getWakeUpTime());
             ((SleepViewHolder) holder).goBed.setText(did.getGoBedTime());
+        }
+        else if(holder instanceof PulseViewHolder){
+            ((PulseViewHolder) holder).Date.setText(did.getPulseDate());
+            ((PulseViewHolder) holder).Pulse.setText(did.getPulse());
+
         }
     }
 
@@ -180,6 +186,19 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Dinner = (ImageView)v.findViewById(R.id.detail_meal_dinner_ImageView_id);
         }
     }
+
+    static class PulseViewHolder extends RecyclerView.ViewHolder {
+        public TextView Date;
+        public TextView Pulse;
+
+        public PulseViewHolder(View v) {
+            super(v);
+            Date = (TextView) v.findViewById(R.id.detail_heartbeat_date_textview_id);
+            Pulse = (TextView) v.findViewById(R.id.detail_heartbeat_pulse_textview_id);
+
+        }
+    }
+
     static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar pBar;
         public ProgressViewHolder(View v) {

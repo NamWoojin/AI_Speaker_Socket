@@ -30,7 +30,7 @@ public class DeleteCareMemberActivity extends AppCompatActivity {
         setTitle("사용자 삭제");
 
         Intent intent = getIntent();
-        WorkerName=intent.getStringExtra("WorkerName");
+        WorkerName=intent.getStringExtra("Worker_Name");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.deleteCareMembers_RecyclerView_id);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -45,25 +45,18 @@ public class DeleteCareMemberActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         GetCareMemberList();
     }
 
     public void GetCareMemberList(){
-        Socket_GetInfo socket_getInfo = new Socket_GetInfo(this,"GetMember","/{'worker_name':'"+WorkerName+"'}");
-        while (true){
-            if(socket_getInfo.getAnswer){
-                SetUI(socket_getInfo.input);
-                break;
-            }
-        }
+        new Socket_GetInfo(this,"GetMember","/{'worker_name':'"+WorkerName+"'}","Delete");
     }
 
     public void SetUI(String input){
         if (!input.equals("")) {
             ArrayList<PublicFunctions.MemberTag> arrayList = PublicFunctions.getMemberListFromJSONString(input);
-            ArrayList<CareMembersData> CMdataArrayList = new ArrayList<>();
             CareMembersData CMdata;
             if (DeleteCMListAdapter.getItemCount() > 0)
                 DeleteCMListAdapter.removeALL();
@@ -76,10 +69,10 @@ public class DeleteCareMemberActivity extends AppCompatActivity {
                 CMdata.setGender(arrayList.get(i).MemberGender);
                 CMdata.setName(arrayList.get(i).MemberName);
 
-                CMdataArrayList.add(CMdata);
+                careMembersDataArrayList.add(CMdata);
             }
 
-            DeleteCMListAdapter.addItem(CMdataArrayList);
+            DeleteCMListAdapter.addItem(careMembersDataArrayList);
         }
         else{
 
