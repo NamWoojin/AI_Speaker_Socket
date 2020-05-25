@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 
 public class AddCareMemberActivity extends AppCompatActivity {
@@ -47,7 +52,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 String CMAge = AgeEditText.getText().toString();
                 EditText DeviceIdEditText = (EditText)findViewById(R.id.CMDeviceEditText_id);
                 String CMDeviceId = DeviceIdEditText.getText().toString();
-                if(!CMName.equals("")&&!CMAge.equals("")&&!CMDeviceId.equals("")) {
+                if(!CMName.equals("")&&!CMAge.equals("")&&!CMDeviceId.equals("")&& bitmap != null) {
                     SendInformation(CMName, Gender, CMAge, CMDeviceId);
                     finish();
                 }
@@ -95,7 +100,8 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 PublicFunctions.MakeMsg("member_name",name)+","+
                 PublicFunctions.MakeMsg("member_age",age)+","+
                 PublicFunctions.MakeMsg("member_gender",gender)+","+
-                PublicFunctions.MakeMsg("photo",BitmapToString(bitmap))+"}";
+                PublicFunctions.MakeMsg("photo",PublicFunctions.BitmapToByteArray(bitmap).toString())+"}";
+
 
         Socket_SendInfo socket_sendInfo = new Socket_SendInfo("AddMember",send_msg);
         while(true){
@@ -117,67 +123,34 @@ public class AddCareMemberActivity extends AppCompatActivity {
         if (requestCode == 1) {
             Bundle bundle = data.getExtras();
             bitmap = (Bitmap)bundle.get("data");
-            int mDegree = 0;
-            mDegree += 90;
-            bitmap = rotateImage(bitmap,mDegree);
+            Log.i("TAG","++++++"+PublicFunctions.BitmapToByteArray(bitmap));
             ImageButton button1 = (ImageButton)findViewById(R.id.add_photo_button);
             button1.setImageBitmap(bitmap);
         }
     }
 
-    public static String BitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
-        byte[] bytes = baos.toByteArray();
-        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
-        return temp;
+
+    public void SaveBitmapToFile(Bitmap bitmap, String strFilePath ,String filename) {
+        File file = new File(strFilePath);
+        OutputStream out = null;
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        File fileCacheItem = new File(strFilePath + filename);
+        try {
+            fileCacheItem.createNewFile();
+            out = new FileOutputStream(fileCacheItem);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
-//    public  void SaveBitmapToFile(Bitmap bitmap, String strFilePath ,String filename) {
-//        File file = new File(strFilePath);
-//        OutputStream out = null;
-//        if (!file.exists()) {
-//            file.mkdirs();
-//        }
-//        File fileCacheItem = new File(strFilePath + filename);
-//        try {
-//            fileCacheItem.createNewFile();
-//            out = new FileOutputStream(fileCacheItem);
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                out.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-
-//    private void insertRecord() {
-//        String name = mName.getText().toString()+".png";
-//        SaveBitmapToFile(bitmap,FileAddress,name);
-//
-//        String ImageAddress = FileAddress + name;
-//        ImageAddress = ImageAddress.replaceAll(" ","");
-//
-//        nOfRows = mDbHelper.insertRestaurnatByMethod(mName.getText().toString(), mAddress.getText().toString(),
-//                mPhonenumber.getText().toString(), mTime.getText().toString(),ImageAddress);
-//
-//        if (nOfRows >0) {
-//            Toast.makeText(this, nOfRows + " Record Inserted", Toast.LENGTH_SHORT).show();
-//            onBackPressed();
-//        }
-//        else
-//            Toast.makeText(this,"No Record Inserted", Toast.LENGTH_SHORT).show();
-//    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-    }
 }

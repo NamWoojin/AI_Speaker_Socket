@@ -1,5 +1,8 @@
 package com.hansung.android.ai_speaker_socket;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -7,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class PublicFunctions {
@@ -135,9 +139,10 @@ public class PublicFunctions {
                     MemberTag thing = new MemberTag(jsonObject.getString("RegisterTime"),
                             jsonObject.getString("MemberGender"),
                             jsonObject.getString("SocialWorkerName"),
-                            jsonObject.getString("Device_Id"),
+                            jsonObject.getString("Device_id"),
                             jsonObject.getString("MemberAge"),
-                            jsonObject.getString("MemberName")
+                            jsonObject.getString("MemberName"),
+                            jsonObject.getString("Photo")
 
                     );
                     output.add(thing);
@@ -161,8 +166,9 @@ public class PublicFunctions {
         String Device_Id;
         String MemberGender;
         String RegisterTime;
+        String Photo;
 
-        public MemberTag(String time,String member_Gender,String worker_Name,String Device_Id, String member_Age, String member_Name) {
+        public MemberTag(String time,String member_Gender,String worker_Name,String Device_Id, String member_Age, String member_Name,String photo) {
 
 
             this.SocialWorkerName = worker_Name;
@@ -171,7 +177,7 @@ public class PublicFunctions {
             this.MemberAge = member_Age;
             this.MemberGender = member_Gender;
             this.RegisterTime = time;
-
+            this.Photo = photo;
         }
 
         public String toString() {
@@ -235,5 +241,38 @@ public class PublicFunctions {
     public static String MakeMsg(String key, String value){
         return "\'"+key+"\':\'"+value+"\'";
     }
+
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public static String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, baos);
+        byte[] bytes = baos.toByteArray();
+        String temp = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return temp;
+    }
+
+    public static byte[] BitmapToByteArray( Bitmap bitmap ) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
+        byte[] byteArray = stream.toByteArray() ;
+        return byteArray ;
+    }
+
+
+    public static Bitmap byteArrayToBitmap( byte[] byteArray ) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray( byteArray, 0, byteArray.length ) ;
+        return bitmap ;
+    }
+
 
 }

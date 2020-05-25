@@ -150,7 +150,7 @@ public class CareMembersListActivity extends AppCompatActivity implements View.O
             CMListViewAdapter.notifyDataSetChanged();
 
             for (int i = 0; i < arrayList.size(); i++)
-                CMListViewAdapter.addItem(arrayList.get(i).MemberName, arrayList.get(i).MemberGender, arrayList.get(i).MemberAge, arrayList.get(i).Device_Id);
+                CMListViewAdapter.addItem(arrayList.get(i).MemberName, arrayList.get(i).MemberGender, arrayList.get(i).MemberAge, arrayList.get(i).Device_Id,arrayList.get(i).Photo);
 
         }
         else{
