@@ -25,8 +25,6 @@ public class PublicFunctions {
             jsonString = jsonString.replace("\\\"","\"");
 
 
-            Log.i("TAG", "jsonString="+jsonString);
-
             JSONObject root = new JSONObject(jsonString);
             JSONArray jsonArray = root.getJSONArray("data");
             if(jsonArray.length() >0){
@@ -72,8 +70,6 @@ public class PublicFunctions {
         try {
             jsonString = jsonString.replace("\\\"","\"");
 
-
-            Log.i("MedicineTag", "jsonString="+jsonString);
 
             JSONObject root = new JSONObject(jsonString);
             JSONArray jsonArray = root.getJSONArray("data");
@@ -121,11 +117,7 @@ public class PublicFunctions {
     public static ArrayList<MemberTag> getMemberListFromJSONString(String jsonString) {
         ArrayList<MemberTag> output = new ArrayList();
         try {
-            //jsonString = jsonString.substring(1,jsonString.length());
             jsonString = jsonString.replace("\\\"","\"");
-
-
-            //Log.i("TAG", "jsonString="+jsonString);
 
             JSONObject root = new JSONObject(jsonString);
 

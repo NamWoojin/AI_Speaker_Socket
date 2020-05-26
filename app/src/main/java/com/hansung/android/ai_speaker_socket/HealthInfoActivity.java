@@ -197,7 +197,7 @@ public class HealthInfoActivity extends AppCompatActivity {
             }
         }
         else {
-            Toast.makeText(this, "식사 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "식사 정보가 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 

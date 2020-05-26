@@ -100,7 +100,7 @@ public class DeleteCareMemberActivity extends AppCompatActivity {
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
             String send_msg = "{"+PublicFunctions.MakeMsg("device_id",DeleteCMListAdapter.getItem(position).getDeviceId())+","+
-                    PublicFunctions.MakeMsg("woreker_name", WorkerName)+","+
+                    PublicFunctions.MakeMsg("worker_name", WorkerName)+","+
                     PublicFunctions.MakeMsg("member_name", DeleteCMListAdapter.getItem(position).getName())+","+
                     PublicFunctions.MakeMsg("member_age", DeleteCMListAdapter.getItem(position).getAge())+","+
                     PublicFunctions.MakeMsg("member_gender", DeleteCMListAdapter.getItem(position).getGender())+"}";

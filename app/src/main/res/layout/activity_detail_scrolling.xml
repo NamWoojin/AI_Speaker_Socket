@@ -208,13 +208,13 @@
                             android:layout_height="wrap_content"
                             android:text="평균 심박수"
                             android:textColor="@color/White"
-                            android:textSize="15dp"/>
+                            android:textSize="17dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/White"
                             android:id="@+id/averagePulseTextView_id"
-                            android:textSize="20dp"
+                            android:textSize="25dp"
                             android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>

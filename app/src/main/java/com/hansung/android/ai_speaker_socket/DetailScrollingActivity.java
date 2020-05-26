@@ -33,6 +33,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     String SleepWakeUpTime ="";
     String SleepGoBedTime="";
 
+    String averagePulse = "";
 
     private DetailItemAdapter mAdapter;
     private ArrayList<DetailItemData> itemList;
@@ -426,20 +427,32 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         new Socket_GetInfo(this,"GetPulse",params,loadNum);
     }
 
-    public void SetAveragePulse(String input){
+    public ArrayList<DetailItemData> MakePulseMaterial(String input){
         ArrayList<PublicFunctions.PulseTag> arrayList = PublicFunctions.getPulseFromJSONString(input);
+        ArrayList<DetailItemData> DIDArrayList = new ArrayList<>();
+        DetailItemData DID;
+
+        for (int i = arrayList.size()-1; i >= 0; --i) {
+            DID = new DetailItemData();
+            DID.setPulse(arrayList.get(i).Pulse);
+            DID.setPulseDate(arrayList.get(i).Time.substring(0, 16));
+            DIDArrayList.add(DID);
+        }
+
         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
         int averagePulseInt = 0;
         int count = 0;
-        String averagePulse = "";
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -7);
-        for(int i = 0;i<arrayList.size();i++){
-            Date date = new Date();
+        Date date;
+        for(int i = 0;i<arrayList.size();++i){
             try {
+                date = new Date();
                 date = transFormat.parse(arrayList.get(i).Time);
             }
             catch (ParseException e){break;}
+
             if(cal.getTime().compareTo(date)<0){
                 ++count;
                 averagePulseInt += Integer.parseInt(arrayList.get(i).Pulse);
@@ -453,8 +466,12 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
 
         averagePulse = Integer.toString(averagePulseInt);
 
+        return DIDArrayList;
+    }
+
+    public void SetAveragePulse(String input){
         TextView pulseTextView = (TextView)findViewById(R.id.averagePulseTextView_id);
-        pulseTextView.setText(averagePulse);
+        pulseTextView.setText(averagePulse + " bpm");
     }
 
 

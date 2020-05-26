@@ -2,6 +2,7 @@ package com.hansung.android.ai_speaker_socket;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             else if(viewMode == 1)
                 return new SleepViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_sleep_recyclerview, parent, false));
             else
-                return new PulseViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_heartbeat_recyclerview,parent,false));
+                return new PulseViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_heartbeat_recyclerview, parent, false));
 
         }
         else {
@@ -106,7 +107,6 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         DetailItemData did = (DetailItemData) itemList.get(position);
         if(holder instanceof MealViewHolder){
             ((MealViewHolder)holder).MealDate.setText(did.getMealDate());

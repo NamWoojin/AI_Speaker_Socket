@@ -199,6 +199,9 @@ public class Socket_GetInfo {
                 case "GetSleep":
                     itemData=((DetailScrollingActivity) context).MakeSleepMaterial(input);
                     break;
+                case "GetPulse":
+                    itemData=((DetailScrollingActivity) context).MakePulseMaterial(input);
+                    break;
             }
         }
         else {
