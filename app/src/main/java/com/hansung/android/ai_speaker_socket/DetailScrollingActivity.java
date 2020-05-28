@@ -457,9 +457,6 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
                 ++count;
                 averagePulseInt += Integer.parseInt(arrayList.get(i).Pulse);
             }
-            else{
-                break;
-            }
         }
         if(count != 0)
             averagePulseInt /= count;
