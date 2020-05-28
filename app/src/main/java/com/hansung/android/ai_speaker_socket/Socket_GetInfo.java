@@ -106,7 +106,7 @@ public class Socket_GetInfo {
                             break;
                         case "GetPulse":
                             ((DetailScrollingActivity) context).AddData(itemData);
-                            ((DetailScrollingActivity) context).SetAveragePulse(input);
+                            ((DetailScrollingActivity) context).SetAveragePulse();
                     }
                 }
                 else {
