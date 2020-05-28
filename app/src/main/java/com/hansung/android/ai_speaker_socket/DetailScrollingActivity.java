@@ -466,7 +466,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         return DIDArrayList;
     }
 
-    public void SetAveragePulse(String input){
+    public void SetAveragePulse(){
         TextView pulseTextView = (TextView)findViewById(R.id.averagePulseTextView_id);
         pulseTextView.setText(averagePulse + " bpm");
     }
