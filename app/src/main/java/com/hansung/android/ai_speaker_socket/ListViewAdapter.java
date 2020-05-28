@@ -2,18 +2,15 @@ package com.hansung.android.ai_speaker_socket;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 

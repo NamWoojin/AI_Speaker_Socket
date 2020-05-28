@@ -13,7 +13,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MedicineAddPopUpActivity extends Activity {
     String DeviceId = "";

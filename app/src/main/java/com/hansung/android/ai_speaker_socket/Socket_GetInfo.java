@@ -2,7 +2,6 @@ package com.hansung.android.ai_speaker_socket;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;

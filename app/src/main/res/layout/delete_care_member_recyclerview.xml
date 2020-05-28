@@ -21,10 +21,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingVertical="10dp">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:id="@+id/DeleteCareMemberPhoto_id" />
 
             <LinearLayout
                 android:orientation="horizontal"

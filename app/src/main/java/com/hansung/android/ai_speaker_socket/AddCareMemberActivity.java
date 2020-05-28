@@ -1,37 +1,24 @@
 package com.hansung.android.ai_speaker_socket;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
-
-public class AddCareMemberActivity extends AppCompatActivity {
-    final static String TAG = "AndroidAPITest";
+public class AddCareMemberActivity extends Activity {
     String Gender = "남";
     String Worker_Name;
-    Bitmap bitmap;
-    String photoString = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_care_member);
 
         Intent intent = getIntent();
@@ -40,7 +27,6 @@ public class AddCareMemberActivity extends AppCompatActivity {
         Button addButton = (Button)findViewById(R.id.addCareMemberButton_id);
         final Button maleButton = (Button)findViewById(R.id.MaleButton_id);
         final Button femaleButton = (Button)findViewById(R.id.FemaleButton_id);
-        final ImageButton photoButton = (ImageButton)findViewById(R.id.add_photo_button);
 
 
 
@@ -53,7 +39,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 String CMAge = AgeEditText.getText().toString();
                 EditText DeviceIdEditText = (EditText)findViewById(R.id.CMDeviceEditText_id);
                 String CMDeviceId = DeviceIdEditText.getText().toString();
-                if(!CMName.equals("")&&!CMAge.equals("")&&!CMDeviceId.equals("")&& bitmap != null) {
+                if(!CMName.equals("")&&!CMAge.equals("")&&!CMDeviceId.equals("")) {
                     SendInformation(CMName, Gender, CMAge, CMDeviceId);
                     finish();
                 }
@@ -83,15 +69,6 @@ public class AddCareMemberActivity extends AppCompatActivity {
             }
         });
 
-        photoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,1);
-            }
-        });
-
-
         maleButton.callOnClick();
     }
 
@@ -100,8 +77,7 @@ public class AddCareMemberActivity extends AppCompatActivity {
                 PublicFunctions.MakeMsg("worker_name",Worker_Name)+","+
                 PublicFunctions.MakeMsg("member_name",name)+","+
                 PublicFunctions.MakeMsg("member_age",age)+","+
-                PublicFunctions.MakeMsg("member_gender",gender)+","+
-                PublicFunctions.MakeMsg("photo",photoString)+"}";
+                PublicFunctions.MakeMsg("member_gender",gender)+"}";
 
 
         Socket_SendInfo socket_sendInfo = new Socket_SendInfo("AddMember",send_msg);
@@ -119,40 +95,11 @@ public class AddCareMemberActivity extends AppCompatActivity {
         }
     }
 
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            Bundle bundle = data.getExtras();
-            bitmap = (Bitmap)bundle.get("data");
-            photoString = new String(PublicFunctions.BitmapToByteArray(bitmap));
-            Log.i("TAG",photoString+"++++++++++");
-            ImageButton button1 = (ImageButton)findViewById(R.id.add_photo_button);
-            button1.setImageBitmap(bitmap);
+    public boolean onTouchEvent(MotionEvent event){
+        if(event.getAction() == MotionEvent.ACTION_OUTSIDE){
+            return false;
         }
-    }
-
-
-    public void SaveBitmapToFile(Bitmap bitmap, String strFilePath ,String filename) {
-        File file = new File(strFilePath);
-        OutputStream out = null;
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        File fileCacheItem = new File(strFilePath + filename);
-        try {
-            fileCacheItem.createNewFile();
-            out = new FileOutputStream(fileCacheItem);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        return true;
     }
 
 

@@ -24,7 +24,7 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity
             android:name=".AddCareMemberActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
         <activity
             android:name=".GetNameActivity"
             android:theme="@style/AppTheme.NoActionBar">

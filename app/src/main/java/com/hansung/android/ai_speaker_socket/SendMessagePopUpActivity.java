@@ -16,7 +16,6 @@ public class SendMessagePopUpActivity extends Activity {
     int port;
 
     EditText messageEditTextView;
-    final static String TAG = "AndroidAPITest";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
