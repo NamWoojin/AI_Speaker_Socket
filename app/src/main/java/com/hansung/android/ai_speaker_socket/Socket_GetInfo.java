@@ -98,6 +98,7 @@ public class Socket_GetInfo {
                             break;
                         case "GetMeal":
                             ((DetailScrollingActivity) context).AddData(itemData);
+                            ((DetailScrollingActivity) context).Toast(input);
                             ((DetailScrollingActivity) context).SetAverageMealTime();
                             break;
                         case "GetSleep":
@@ -149,13 +150,10 @@ public class Socket_GetInfo {
             }
 
 
-            long start = System.currentTimeMillis();
-
             try {
                 if(socketConnected) {
                     while (true) {
-                        long end = System.currentTimeMillis();
-                        if ((end - start) / 1000 < 5) {
+                        if (true) {
                             is = socket.getInputStream();
                             bytes = new byte[4];
                             size = is.read(bytes, 0, 4);

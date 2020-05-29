@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -479,6 +480,10 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     public void AddMoreData (ArrayList<DetailItemData> did){
         mAdapter.addItemMore(did);
         mAdapter.setMoreLoading(false);
+    }
+
+    public void Toast(String input){
+        Toast.makeText(this,input,Toast.LENGTH_LONG);
     }
 
 
