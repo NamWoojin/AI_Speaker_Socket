@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class PublicFunctions {
-    public static String ip = "192.168.0.2"; // IP
+    public static String ip = "192.168.0.112"; // IP
     public static int port = 8888; // PORT
 //    public static String ip = "211.178.81.29"; // IP
 //    public static int port = 50000; // PORT
@@ -22,8 +22,6 @@ public class PublicFunctions {
         ArrayList<Tag> output = new ArrayList();
         try {
             jsonString = jsonString.replace("\\\"","\"");
-
-
             JSONObject root = new JSONObject(jsonString);
             JSONArray jsonArray = root.getJSONArray("data");
             if(jsonArray.length() >0){

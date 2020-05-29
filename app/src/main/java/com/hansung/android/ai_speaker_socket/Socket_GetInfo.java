@@ -2,6 +2,7 @@ package com.hansung.android.ai_speaker_socket;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,6 +104,7 @@ public class Socket_GetInfo {
                             break;
                         case "GetSleep":
                             ((DetailScrollingActivity) context).AddData(itemData);
+                            ((DetailScrollingActivity) context).Toast(input);
                             ((DetailScrollingActivity) context).SetAverageSleepTime();
                             break;
                         case "GetPulse":
@@ -145,7 +147,7 @@ public class Socket_GetInfo {
                 os.flush();
                 socketConnected = true;
             } catch (IOException e) {
-                Log.i("TAG","연결안됨...........................");
+                Log.i("TAG","연결 실패");
                 socketConnected = false;
             }
 
@@ -161,10 +163,14 @@ public class Socket_GetInfo {
                             buffer.order(ByteOrder.LITTLE_ENDIAN);
                             int length = buffer.getInt();
                             bytes = new byte[length];
-                            size = is.read(bytes, 0, length);
-                            input = new String(bytes, "UTF-8");
-
+                            //size = is.read(bytes, 0, length);
+                            size = is.read(bytes);
+                            input = new String(bytes, 0, size,"UTF-8");
+//                            if(length != size){
+//                                input = input.substring(0,size-1) + "]}";
+//                            }
                             if (size > 0) {
+                                Log.i("GETINFO_SIZE",length+"++++++++++++++++++++++++++++"+size);
                                 Log.i("GetInfo_input", input);
                                 break;
                             }
@@ -173,11 +179,14 @@ public class Socket_GetInfo {
                         }
                     }
                 }
+
+                socket.close();
+
                 if(!input.equals(""))
                     DoCalculate();
 
                 getAnswer = true;
-                socket.close();
+
             } catch (IOException e) {
 
             }

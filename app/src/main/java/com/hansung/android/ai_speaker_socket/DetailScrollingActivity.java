@@ -145,13 +145,14 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     }
 
     //-------------------------Meal---------------------------------
+    int MealReadTerm = 14;
     void GetMeal(){ //식사 상세 정보 불러오기
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, loadNum*(-14));
+        cal.add(Calendar.DATE, loadNum*(-MealReadTerm));
         String curDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 
         Calendar twoWeekBefore = Calendar.getInstance();
-        twoWeekBefore.add(Calendar.DATE, (loadNum+1)*(-14));
+        twoWeekBefore.add(Calendar.DATE, (loadNum+1)*(-MealReadTerm));
         String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
 
         String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
@@ -174,10 +175,10 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         String[] DinnerTime = new String[]{"0","0","0","0","0","0","0"};
         DetailItemData did;
 
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < MealReadTerm; i++) {
             did = new DetailItemData();
             Calendar day = Calendar.getInstance();
-            day.add(Calendar.DATE, (loadNum) * (-14) - i);
+            day.add(Calendar.DATE, (loadNum) * (-MealReadTerm) - i);
             did.setMealDate(new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime()));
             itemData.add(did);
         }
@@ -255,13 +256,14 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
 
 
     //---------------------------Sleep--------------------------------
+    int SleepReadTerm = 14;
     void GetSleepTime(){
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, loadNum*(-14));
+        cal.add(Calendar.DATE, loadNum*(-SleepReadTerm));
         String curDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 
         Calendar twoWeekBefore = Calendar.getInstance();
-        twoWeekBefore.add(Calendar.DATE, (loadNum+1)*(-14));
+        twoWeekBefore.add(Calendar.DATE, (loadNum+1)*(-SleepReadTerm));
         String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
 
         String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
@@ -311,10 +313,10 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
             }
         }
 
-        for(int i= 0;i<14;i++){
+        for(int i= 0;i<SleepReadTerm;i++){
             did = new DetailItemData();
             Calendar day = Calendar.getInstance();
-            day.add(Calendar.DATE, (loadNum)*(-14)-i);
+            day.add(Calendar.DATE, (loadNum)*(-SleepReadTerm)-i);
             did.setDate(new java.text.SimpleDateFormat("yyyy-MM-dd").format(day.getTime()));
             itemData.add(did);
         }
@@ -483,7 +485,8 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     }
 
     public void Toast(String input){
-        Toast.makeText(this,input,Toast.LENGTH_LONG);
+        if(input.length()>1400)
+            Toast.makeText(DetailScrollingActivity.this,input.substring(1400),Toast.LENGTH_LONG).show();
     }
 
 
