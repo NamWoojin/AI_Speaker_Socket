@@ -484,12 +484,5 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         mAdapter.setMoreLoading(false);
     }
 
-    public void Toast(String input){
-        if(input.length()>1400)
-            Toast.makeText(DetailScrollingActivity.this,input.substring(1400),Toast.LENGTH_LONG).show();
-    }
-
-
-
 
 }

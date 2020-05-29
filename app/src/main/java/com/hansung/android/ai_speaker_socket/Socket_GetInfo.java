@@ -99,12 +99,10 @@ public class Socket_GetInfo {
                             break;
                         case "GetMeal":
                             ((DetailScrollingActivity) context).AddData(itemData);
-                            ((DetailScrollingActivity) context).Toast(input);
                             ((DetailScrollingActivity) context).SetAverageMealTime();
                             break;
                         case "GetSleep":
                             ((DetailScrollingActivity) context).AddData(itemData);
-                            ((DetailScrollingActivity) context).Toast(input);
                             ((DetailScrollingActivity) context).SetAverageSleepTime();
                             break;
                         case "GetPulse":
@@ -164,13 +162,19 @@ public class Socket_GetInfo {
                             int length = buffer.getInt();
                             bytes = new byte[length];
                             //size = is.read(bytes, 0, length);
-                            size = is.read(bytes);
-                            input = new String(bytes, 0, size,"UTF-8");
-//                            if(length != size){
-//                                input = input.substring(0,size-1) + "]}";
-//                            }
+
+                            int bytesRead = 0;
+                            String response = "";
+
+                            while (bytesRead < length) {
+                                int result = is.read(bytes, bytesRead, length);
+                                if (result == -1) break;
+                                response= new String(bytes, bytesRead, result, "UTF-8");
+                                input += response;
+                                bytesRead += result;
+                            }
+
                             if (size > 0) {
-                                Log.i("GETINFO_SIZE",length+"++++++++++++++++++++++++++++"+size);
                                 Log.i("GetInfo_input", input);
                                 break;
                             }
