@@ -59,7 +59,7 @@ public class Socket_GetInfo {
     }
 
     void DoNext(){
-        while(true) {
+        do{
             if (getAnswer) {
                 if(!remark.equals("")){
                     ((DeleteCareMemberActivity)context).SetUI(input);
@@ -84,7 +84,7 @@ public class Socket_GetInfo {
                 }
                 break;
             }
-        }
+        }while(true);
     }
 
 
@@ -161,18 +161,27 @@ public class Socket_GetInfo {
                             buffer.order(ByteOrder.LITTLE_ENDIAN);
                             int length = buffer.getInt();
                             bytes = new byte[length];
-                            //size = is.read(bytes, 0, length);
+                            size = is.read(bytes, 0, length);
+
 
                             int bytesRead = 0;
-                            String response = "";
+                            //String response = "";
 
-                            while (bytesRead < length) {
-                                int result = is.read(bytes, bytesRead, length);
-                                if (result == -1) break;
-                                response= new String(bytes, bytesRead, result, "UTF-8");
-                                input += response;
-                                bytesRead += result;
+                            while(size<length){
+                                bytesRead = size;
+                                size += is.read(bytes,bytesRead,length-bytesRead);
                             }
+
+                            input = new String(bytes, "UTF-8");
+
+//                            while (bytesRead < length) {
+//                                int result = is.read(bytes, bytesRead, length);
+//                                if (result == -1) break;
+//                                response= new String(bytes, bytesRead, result, "UTF-8");
+//                                input += response;
+//                                bytesRead += result;
+//                            }
+
 
                             if (size > 0) {
                                 Log.i("GetInfo_input", input);

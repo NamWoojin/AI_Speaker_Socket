@@ -39,6 +39,8 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     private DetailItemAdapter mAdapter;
     private ArrayList<DetailItemData> itemList;
 
+    Socket_GetInfo socket_getInfo = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +158,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
 
         String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
-        new Socket_GetInfo(this,"GetMeal",params,loadNum);
+        socket_getInfo = new Socket_GetInfo(this,"GetMeal",params,loadNum);
     }
 
     public ArrayList<DetailItemData> MakeMealMaterial(String input){//json 식사정보 분해 후 가공
@@ -222,6 +224,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         BreakfastTextView.setText(MealBreakfastTime);
         LunchTextView.setText(MealLunchTime);
         DinnerTextView.setText(MealDinnerTime);
+        socket_getInfo = null;
     }
 
 
@@ -267,7 +270,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
 
         String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
-        new Socket_GetInfo(this,"GetSleep",params,loadNum);
+        socket_getInfo = new Socket_GetInfo(this,"GetSleep",params,loadNum);
     }
 
     public ArrayList<DetailItemData> MakeSleepMaterial(String input){
@@ -413,6 +416,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         sleepTextView.setText(SleepAverageTime);
         wakeUpTextView.setText(SleepWakeUpTime);
         goBedTextView.setText(SleepGoBedTime);
+        socket_getInfo  = null;
     }
 
 
@@ -427,7 +431,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
         String yesterDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(twoWeekBefore.getTime());
 
         String params = "/{"+PublicFunctions.MakeMsg("device_id",DeviceId)+","+PublicFunctions.MakeMsg("from",yesterDate+" 00:00:00")+","+PublicFunctions.MakeMsg("to",curDate+" 23:59:59")+"}";
-        new Socket_GetInfo(this,"GetPulse",params,loadNum);
+        socket_getInfo = new Socket_GetInfo(this,"GetPulse",params,loadNum);
     }
 
     public ArrayList<DetailItemData> MakePulseMaterial(String input){
@@ -472,6 +476,7 @@ public class DetailScrollingActivity extends AppCompatActivity implements Detail
     public void SetAveragePulse(){
         TextView pulseTextView = (TextView)findViewById(R.id.averagePulseTextView_id);
         pulseTextView.setText(averagePulse + " bpm");
+        socket_getInfo = null;
     }
 
 
