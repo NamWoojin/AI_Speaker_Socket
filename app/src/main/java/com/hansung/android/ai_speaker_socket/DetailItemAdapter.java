@@ -61,7 +61,7 @@ public class DetailItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
 
-                if (!isMoreLoading && (totalItemCount - visibleItemCount)<= (firstVisibleItem + visibleThreshold)) {
+                if (!isMoreLoading && (totalItemCount - visibleItemCount)<= (firstVisibleItem + visibleThreshold)) { //보여지는 아이템이 거의 끝나갈 때
                     if (onLoadMoreListener != null) {
                         onLoadMoreListener.onLoadMore();
                     }

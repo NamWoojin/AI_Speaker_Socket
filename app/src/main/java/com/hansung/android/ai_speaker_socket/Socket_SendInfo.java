@@ -27,10 +27,10 @@ public class Socket_SendInfo {
     public Socket_SendInfo(String mode, String send_msg){
         this.ip = PublicFunctions.ip;
         this.port = PublicFunctions.port;
-        this.mode = mode;
-        this.output = send_msg;
+        this.mode = mode;               //포맷화 명령어
+        this.output = send_msg;         //전송 메세지
 
-        checkStart.start();
+        checkStart.start();             //스레드 시작
     }
 
 
@@ -43,7 +43,7 @@ public class Socket_SendInfo {
                 SocketAddress socketAddress = new InetSocketAddress(ip, port);
                 socket.connect(socketAddress,3000);
                 os = socket.getOutputStream();
-                String send_msg = app+"/"+mode+"/"+output;
+                String send_msg = app+"/"+mode+"/"+output;  //메세지 구성
                 Log.i("SendInfo_output",send_msg);
                 bytes = send_msg.getBytes();
                 ByteBuffer buffer = ByteBuffer.allocate(4);
@@ -52,14 +52,14 @@ public class Socket_SendInfo {
                 os.write(buffer.array(),0,4);
                 os.write(bytes);
                 os.flush();
-                sendSuccess = true;
+                sendSuccess = true;     //전송 성공
                 socket.close();
 
             } catch (IOException e) {
-                sendSuccess = false;
+                sendSuccess = false;    //전송 실패
             }
 
-        sendMsg = true;
+        sendMsg = true;                 //전송 완료
         }
     };
 }

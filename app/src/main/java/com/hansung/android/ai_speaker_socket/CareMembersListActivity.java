@@ -40,7 +40,7 @@ public class CareMembersListActivity extends AppCompatActivity implements View.O
         CareMembersListView.setAdapter(CMListViewAdapter);
 
         TextView WorkerNameTextView= (TextView)findViewById(R.id.socialWorkerNameTextView_id);
-        WorkerNameTextView.setText("사회복지사 "+Worker_Name+"님");
+        WorkerNameTextView.setText("생활관리사 "+Worker_Name+"님");
 
         fab_open = AnimationUtils.loadAnimation(this, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this, R.anim.fab_close);

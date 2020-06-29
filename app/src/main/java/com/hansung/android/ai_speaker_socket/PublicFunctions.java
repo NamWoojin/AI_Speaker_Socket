@@ -61,7 +61,7 @@ public class PublicFunctions {
     }
 
 
-    public static ArrayList<MedicineTag> getMedicineFromJSONString(String jsonString) {
+    public static ArrayList<MedicineTag> getMedicineFromJSONString(String jsonString) {     //약 정보 Json 해석
         ArrayList<MedicineTag> output = new ArrayList();
         try {
             jsonString = jsonString.replace("\\\"","\"");
@@ -90,7 +90,7 @@ public class PublicFunctions {
     }
 
 
-    public static class MedicineTag {
+    public static class MedicineTag {   //약 정보 데이터 형식
         String Type;
         String Device_id;
         String Name;
@@ -110,7 +110,7 @@ public class PublicFunctions {
         }
     }
 
-    public static ArrayList<MemberTag> getMemberListFromJSONString(String jsonString) {
+    public static ArrayList<MemberTag> getMemberListFromJSONString(String jsonString) { //노인 사용자 Json 해석
         ArrayList<MemberTag> output = new ArrayList();
         try {
             jsonString = jsonString.replace("\\\"","\"");
@@ -146,7 +146,7 @@ public class PublicFunctions {
     }
 
 
-    public static class MemberTag {
+    public static class MemberTag { //노인 사용자 정보 데이터 형식
         String SocialWorkerName;
         String MemberName;
         String MemberAge;
@@ -170,7 +170,7 @@ public class PublicFunctions {
         }
     }
 
-    public static ArrayList<PulseTag> getPulseFromJSONString(String jsonString) {
+    public static ArrayList<PulseTag> getPulseFromJSONString(String jsonString) { //심박 정보 Json 해석
         ArrayList<PulseTag> output = new ArrayList();
         try {
             jsonString = jsonString.replace("\\\"","\"");
@@ -204,7 +204,7 @@ public class PublicFunctions {
     }
 
 
-    public static class PulseTag {
+    public static class PulseTag {   //심박 정보 데이터 형식
         String Device_id;
         String Pulse;
         String Time;

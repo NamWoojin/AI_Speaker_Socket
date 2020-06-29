@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HealthInfoActivity extends AppCompatActivity {
@@ -162,9 +163,9 @@ public class HealthInfoActivity extends AppCompatActivity {
                 mLVI.setMedicineType(arrayList.get(i).Type);
                 mLVI.setMedicineCycle(arrayList.get(i).Cycle);
                 mLVIArray.add(mLVI);
-                adapter.addItem(mLVIArray);
-            }
 
+            }
+            adapter.addItem(mLVIArray);
         }
         else{
             listView.setAdapter(adapter);
@@ -213,6 +214,7 @@ public class HealthInfoActivity extends AppCompatActivity {
         if(dinner)
             dinner_img = dinner_image;
 
+        ListViewItem sleep =(ListViewItem)adapter.getItem(1);
         adapter.removeItem(1);
         adapter.addItem(breakfast_img, lunch_img, dinner_img);
         listView.setAdapter(adapter);

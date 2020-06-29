@@ -151,10 +151,7 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem item = new ListViewItem();
         item.setType(ITEM_VIEW_TYPE_MEDICINE) ;
         item.setmLVI(mLVI);
-        if(listViewItemList.size()>3)
-            listViewItemList.set(0,item);
-        else
-            listViewItemList.add(0,item);
+        listViewItemList.add(0,item);
     }
     public void addItem(Drawable morningImage, Drawable afternoonImage,Drawable nightImage) {
         ListViewItem item = new ListViewItem() ;
@@ -162,10 +159,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setMorningImage(morningImage);
         item.setAfternoonImage(afternoonImage);
         item.setNightImage(nightImage);
-        if(listViewItemList.size()>3)
-            listViewItemList.set(1,item);
-        else
-            listViewItemList.add(1,item);
+        listViewItemList.add(1,item);
     }
 
     public void addItem(String sleepTime,String goBedTime,String getUpTime) {
@@ -174,10 +168,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setSleepTime(sleepTime);
         item.setGoBedTime(goBedTime);
         item.setGetUpTime(getUpTime);
-        if(listViewItemList.size()>3)
-            listViewItemList.set(2,item);
-        else
-            listViewItemList.add(2,item);
+        listViewItemList.add(2,item);
     }
 
     public void addItem(String heartBeat,String time) {
@@ -185,10 +176,7 @@ public class ListViewAdapter extends BaseAdapter {
         item.setType(ITEM_VIEW_TYPE_BEAT) ;
         item.setHeartBeat(heartBeat);
         item.setHeartTime(time);
-        if(listViewItemList.size()>3)
-            listViewItemList.set(3,item);
-        else
-            listViewItemList.add(3,item);
+        listViewItemList.add(3,item);
     }
 
     public void removeItem(int index){

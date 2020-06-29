@@ -31,7 +31,7 @@ public class Socket_GetInfo {
 
 
 
-    public Socket_GetInfo(Context context,String mode,String send_msg){
+    public Socket_GetInfo(Context context,String mode,String send_msg){ //정보 조회
         this.send_msg = send_msg;
         this.mode = mode;
         this.context = context;
@@ -39,7 +39,7 @@ public class Socket_GetInfo {
         DoNext();
     }
 
-    public Socket_GetInfo(Context context,String mode,String send_msg,int loadNum){
+    public Socket_GetInfo(Context context,String mode,String send_msg,int loadNum){ //상세 정보 조회
         this.send_msg = send_msg;
         this.mode = mode;
         this.context = context;
@@ -49,7 +49,7 @@ public class Socket_GetInfo {
         DoNextDetail();
     }
 
-    public Socket_GetInfo(Context context, String mode, String send_msg,String remark){
+    public Socket_GetInfo(Context context, String mode, String send_msg,String remark){ //복약 정보 (???????????????)
         this.send_msg = send_msg;
         this.mode = mode;
         this.remark = remark;
@@ -80,6 +80,7 @@ public class Socket_GetInfo {
                             break;
                         case "GetPulse":
                             ((HealthInfoActivity) context).SetHeartUI(input);
+                            break;
                     }
                 }
                 break;
@@ -108,6 +109,7 @@ public class Socket_GetInfo {
                         case "GetPulse":
                             ((DetailScrollingActivity) context).AddData(itemData);
                             ((DetailScrollingActivity) context).SetAveragePulse();
+                            break;
                     }
                 }
                 else {
@@ -153,7 +155,6 @@ public class Socket_GetInfo {
             try {
                 if(socketConnected) {
                     while (true) {
-                        if (true) {
                             is = socket.getInputStream();
                             bytes = new byte[4];
                             size = is.read(bytes, 0, 4);
@@ -187,9 +188,6 @@ public class Socket_GetInfo {
                                 Log.i("GetInfo_input", input);
                                 break;
                             }
-                        } else {
-                            break;
-                        }
                     }
                 }
 
