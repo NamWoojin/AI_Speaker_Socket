@@ -164,9 +164,7 @@ public class Socket_GetInfo {
                             bytes = new byte[length];
                             size = is.read(bytes, 0, length);
 
-
                             int bytesRead = 0;
-                            //String response = "";
 
                             while(size<length){
                                 bytesRead = size;
